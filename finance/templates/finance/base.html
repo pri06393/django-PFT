@@ -10,6 +10,11 @@
 
         {% if user.is_authenticated %}
 
+        <a href="{% url 'Transaction_add' %}">Add Transaction</a>
+        <a href="{% url 'Dashboard' %}">Dashboard</a>
+        <a href="{% url 'transaction_list' %}">Transaction</a>
+       
+
         <form id = "logout-form" action = "{% url 'logout' %}" method = "POST">
             {% csrf_token %}
             <a href = "#" onCLick = "document.getElementById('logout-form').submit();">Logout</a>
@@ -17,8 +22,9 @@
 
         {% else %}
 
-        <a href="{% url 'login' %}">Login</a>
-        <a href ="{% url 'register' %}">Register</a>
+        <!-- <a href="{% url 'login' %}">Login</a> -->
+        <!-- <a href ="{% url 'register' %}">Register</a> -->
+
 
         {% endif %}
         

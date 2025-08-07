@@ -22,4 +22,7 @@
     <input type="hidden" name="next" value="{{ next }}">
     <button type="submit">Sign in</button>
 </form>
+<div> <p>Don't have an account?></p>
+    <a href = "{% url 'register' %}">Register here</a>
+</div>
 {% endblock content %}

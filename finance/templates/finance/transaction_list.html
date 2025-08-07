@@ -1,0 +1,15 @@
+{% extends "finance/base.html" %}
+    {% block title %}Transaction form{% endblock title %}
+    {% block content %}
+    <h1>transaction_list</h1>
+    {% for transaction in Transactions %}
+    {{transaction.id}}
+    {{transaction.title}}
+    {{transaction.amount}}
+    {% if transaction.transaction_type == 'Income' %}
+    Credit
+    {% else %}
+    Debit
+    {% endif %}<a href="{% url 'update_list' transaction.id %}">Update Transaction</a><a href="{% url 'delete_list' transaction.id %}">Delete Transaction</a>
+    {% endfor %}
+    {% endblock content %} 
