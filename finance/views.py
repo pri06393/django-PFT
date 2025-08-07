@@ -6,6 +6,9 @@ from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Transaction
 from django.db.models import Sum
+from django.core.paginator import Paginator
+import csv
+
 
 
 class RegisterView(View):
@@ -39,9 +42,11 @@ class TransactionCreationView(LoginRequiredMixin,View):
     
 class TransactionListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        Transactions = Transaction.objects.all()
-        return render(request, "finance/transaction_list.html", {'Transactions': Transactions})
-    
+        all_transactions = Transaction.objects.filter(user=request.user).order_by('-date')
+        paginator = Paginator(all_transactions, 5)  # Show 5 per page
+        page_number = request.GET.get('page')
+        transactions_page = paginator.get_page(page_number)
+        return render(request, "finance/transaction_list.html", {'Transactions': transactions_page})
 
 # def updateTransaction(request,pk):
 #     transaction = get_object_or_404(Transaction, id = pk)
@@ -97,3 +102,22 @@ class DashboardView(LoginRequiredMixin, View):
             'recent_transactions': recent_transactions,
         }
         return render(request, "finance/dashboard.html", context)
+    
+
+def export_transactions_csv(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    transactions = Transaction.objects.filter(user= request.user)
+    response = HttpResponse(content_type = 'text/csv')
+    response['Content-Disposition'] = 'attachment; filename="transactions.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['Title', 'Amount', 'Type', 'Date', 'Category'])
+    for t in transactions:
+        writer.writerow([t.title, t.amount, t.transaction_type, t.date, t.category])
+    return response
+
+
+
+
+
+
