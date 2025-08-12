@@ -1,5 +1,20 @@
 {% extends "finance/base.html" %}
-{% block title %}Dashboard{% endblock title %}
+{% block title %}Dashboard{% endblock %}
 {% block content %}
-<p>Dashboard </p>
-{% endblock content %}
+<h2>Welcome, {{ user.username }}</h2>
+<p><strong>Total Income:</strong> ₹{{ total_income }}</p>
+<p><strong>Total Expenses:</strong> ₹{{ total_expenses }}</p>
+<p><strong>Balance:</strong> ₹{{ balance }}</p>
+<h3>Recent Transactions</h3>
+<ul>
+  {% for transaction in recent_transactions %}
+    <li>
+      {{ transaction.title }} - ₹{{ transaction.amount }}
+      ({{ transaction.transaction_type }}) on {{ transaction.date }}
+    </li>
+  {% empty %}
+    <li>No recent transactions</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "finance/base.html" %}
+    {% block title %}Transaction form{% endblock title %}
+    {% block content %}
+    <p>Transaction form</p>
+    
+     <form method="post">
+        {% csrf_token %}
+    {{form.as_p}}
+    
+    <button type = "submit">Submit
+                </button>
+                </form>
+            
+    {% endblock content %}
