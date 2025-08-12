@@ -1,0 +1,25 @@
+{% extends "finance/base.html" %}
+{% block title %}Login{% endblock title %}
+{% block content %}
+<h2>Please sign in to your account</h2>
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div>
+        <label for="{{ form.username.id_for_label }}">Username:</label>
+        {{ form.username }}
+        {% for error in form.username.errors %}
+            <p style="color:red;">{{ error }}</p>
+        {% endfor %}
+    </div>
+    <div>
+        <label for="{{ form.password.id_for_label }}">Password:</label>
+        {{ form.password }}
+        {% for error in form.password.errors %}
+            <p style="color:red;">{{ error }}</p>
+        {% endfor %}
+    </div>
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit">Sign in</button>
+</form>
+{% endblock content %}

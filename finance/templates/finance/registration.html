@@ -1,0 +1,43 @@
+{% extends "finance/base.html" %}
+{% block title %}Register{% endblock title %}
+{% block content %}
+
+        <p>Registration form</p>
+        <form action = "", class = "", method = "post">
+            {% csrf_token %}
+            <div>
+                <label for="username">Username: </label>
+                <input id="username" type="text" name="username" >
+                {% for error in form.username.errors %}
+                <p style="color:red;">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div>
+                <label for="email">EmailID: </label>
+                <input id="email" type="email" name="email" >
+                {% for error in form.email.errors %}
+                <p style="color:red;">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div>
+                <label for="password1">Password: </label>
+                <input id="password1" type="password" name="password1">
+                {% for error in form.password1.errors %}
+                <p style="color:red;">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div>
+                <label for="password2">Confirm Password: </label>
+                <input id="password2" type="password" name="password2">
+                {% for error in form.password2.errors %}
+                <p style="color:red;">{{ error }}</p>
+                {% endfor %}
+            </div> 
+            <!-- {{form}} -->
+            
+                <button type = "submit">Register
+                </button>
+        </form>
+{% endblock content %}
+   
